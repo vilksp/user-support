@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/user")
-public class UserController {
+public class UserController extends ExceptionHandlerController {
 
 }
