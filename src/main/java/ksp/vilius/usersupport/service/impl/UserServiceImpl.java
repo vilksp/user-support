@@ -5,6 +5,7 @@ import ksp.vilius.usersupport.exceptions.UsernameExistsException;
 import ksp.vilius.usersupport.models.User;
 import ksp.vilius.usersupport.models.UserPrincipal;
 import ksp.vilius.usersupport.repository.UserRepository;
+import ksp.vilius.usersupport.service.LoginAttemptService;
 import ksp.vilius.usersupport.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final LoginAttemptService attemptService;
 
 
     @Override
@@ -39,6 +41,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         User userToFind = repository.findByUsername(username);
 
         if (userToFind != null) {
+            validateLoginAttempt(userToFind);
             userToFind.setLastLoginDateDisplay(userToFind.getLastLoginDate());
             userToFind.setLastLoginDate(new Date());
             repository.save(userToFind);
@@ -46,6 +49,16 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
 
         throw new UsernameNotFoundException("User not found with username: " + username);
+    }
+
+    private void validateLoginAttempt(User userToFind) {
+        if (userToFind.isNotLocked()) {
+            if (attemptService.hasExceededMaxAttempts(userToFind.getUsername())) {
+                userToFind.setNotLocked(false);
+            }
+            userToFind.setNotLocked(true);
+        }
+        attemptService.evictUserFromLoginAttemptCache(userToFind.getUsername());
     }
 
     @Override
