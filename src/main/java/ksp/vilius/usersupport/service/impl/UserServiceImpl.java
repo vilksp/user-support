@@ -7,6 +7,7 @@ import ksp.vilius.usersupport.models.UserPrincipal;
 import ksp.vilius.usersupport.repository.UserRepository;
 import ksp.vilius.usersupport.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,12 +27,12 @@ import static ksp.vilius.usersupport.enums.Role.ROLE_USER;
 @Service
 @Transactional
 @AllArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserDetailsService, UserService {
 
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
 
-    
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -56,6 +57,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         User user = new User();
         user.setUserId(generateUserId());
         String password = generatePassword();
+        log.info(password);
         String encodedPassword = encodePassword(password);
         user.setFirstName(firstName);
         user.setLastName(lastName);
