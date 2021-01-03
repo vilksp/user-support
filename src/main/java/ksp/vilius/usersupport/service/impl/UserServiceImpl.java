@@ -5,6 +5,7 @@ import ksp.vilius.usersupport.exceptions.UsernameExistsException;
 import ksp.vilius.usersupport.models.User;
 import ksp.vilius.usersupport.models.UserPrincipal;
 import ksp.vilius.usersupport.repository.UserRepository;
+import ksp.vilius.usersupport.service.EmailService;
 import ksp.vilius.usersupport.service.LoginAttemptService;
 import ksp.vilius.usersupport.service.UserService;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.mail.MessagingException;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final LoginAttemptService attemptService;
+    private final EmailService emailService;
 
 
     @Override
@@ -63,7 +66,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public User register(String firstName, String lastName, String username, String email)
-            throws EmailExistsException, UsernameExistsException {
+            throws EmailExistsException, UsernameExistsException, MessagingException {
 
         validateNewUsernameAndEmail(StringUtils.EMPTY, username, email);
 
@@ -83,7 +86,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         user.setRole(ROLE_USER.name());
         user.setAuthorities(ROLE_USER.getAuthorities());
         user.setProfileImageUrl(getTemporaryProfileImage());
-        return repository.save(user);
+        User userToRegister = repository.save(user);
+        emailService.sendNewPasswordEmail(userToRegister.getFirstName(),userToRegister.getEmail(),password);
+        return userToRegister;
     }
 
     @Override

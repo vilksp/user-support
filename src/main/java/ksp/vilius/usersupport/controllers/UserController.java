@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.mail.MessagingException;
+
 import static ksp.vilius.usersupport.constant.SecurityConstant.JWT_TOKEN_HEADER;
 
 @RestController
@@ -29,7 +31,7 @@ public class UserController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) throws EmailExistsException, UsernameExistsException {
+    public ResponseEntity<User> registerUser(@RequestBody User user) throws EmailExistsException, UsernameExistsException, MessagingException {
 
         User registeredUser = userService.register(user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail());
         return new ResponseEntity<>(registeredUser, HttpStatus.OK);
