@@ -2,8 +2,8 @@ package ksp.vilius.usersupport.constant;
 
 public class EmailConstant {
     public static final String SIMPLE_MAIL_TRANSFER_PROTOCOL = "smtps";
-    public static final String USERNAME = "email@gmail.com";
-    public static final String PASSWORD = "emailsPassword";
+    public static final String USERNAME = "";
+    public static final String PASSWORD = "";
     public static final String FROM_EMAIL = "vilpil900@gmail.com";
     public static final String CC_EMAIL = "";
     public static final String EMAIL_SUBJECT = "User support - new password";

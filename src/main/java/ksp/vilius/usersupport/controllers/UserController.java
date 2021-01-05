@@ -1,5 +1,6 @@
 package ksp.vilius.usersupport.controllers;
 
+import ksp.vilius.usersupport.Payload.UserRequest;
 import ksp.vilius.usersupport.exceptions.EmailExistsException;
 import ksp.vilius.usersupport.exceptions.UsernameExistsException;
 import ksp.vilius.usersupport.models.User;
@@ -12,12 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+
+import java.io.IOException;
 
 import static ksp.vilius.usersupport.constant.SecurityConstant.JWT_TOKEN_HEADER;
 
@@ -47,6 +47,22 @@ public class UserController {
 
         return new ResponseEntity<>(loginUser, jwtHeader, HttpStatus.OK);
     }
+
+    @PostMapping("/add")
+    public ResponseEntity<User> addNewUser(@RequestBody UserRequest request)
+            throws UsernameExistsException, IOException, EmailExistsException {
+
+        return new ResponseEntity<User>(userService.addNewUser(request), HttpStatus.OK);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<User> updateUser(@RequestBody UserRequest request,
+                                           @RequestParam String currentUsername)
+            throws UsernameExistsException, IOException, EmailExistsException {
+
+        return new ResponseEntity<User>(userService.updateUser(currentUsername, request), HttpStatus.OK);
+    }
+
 
     private HttpHeaders getJwtHeaders(UserPrincipal userPrincipal) {
         HttpHeaders headers = new HttpHeaders();
