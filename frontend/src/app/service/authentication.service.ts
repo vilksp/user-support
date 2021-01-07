@@ -14,6 +14,7 @@ import { User } from '../model/User';
 export class AuthenticationService {
   private host = environment.apiUrl;
   private token: string;
+  private loggedInUsername: string;
   constructor(private http: HttpClient) {}
 
   public login(user: User): Observable<HttpResponse<any> | HttpErrorResponse> {
@@ -33,6 +34,9 @@ export class AuthenticationService {
 
   public logout(): void {
     this.token = null;
-    localStorage.clear();
+    this.loggedInUsername = null;
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('users');
   }
 }
