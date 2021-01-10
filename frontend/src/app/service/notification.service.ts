@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NotifierService } from 'angular-notifier';
+import { NotificationType } from '../enum/notification-type.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +8,7 @@ import { NotifierService } from 'angular-notifier';
 export class NotificationService {
   constructor(private notifier: NotifierService) {}
 
-  public notify(type: string, message: string) {
+  public notify(type: NotificationType, message: string) {
     this.notifier.notify(type, message);
   }
 }
