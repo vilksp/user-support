@@ -1,1 +1,62 @@
-<p>register works!</p>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+
+    <!-- Login Form -->
+    <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm.value)">
+      <input
+        type="text"
+        class="fadeIn second"
+        name="firstName"
+        placeholder="First Name"
+        ngModel
+        #firstnameInput="ngModel"
+        required
+      />
+      <input
+        type="text"
+        class="fadeIn second"
+        name="lastName"
+        placeholder="Last Name"
+        ngModel
+        #lastnameInput="ngModel"
+        required
+      />
+      <input
+        type="text"
+        class="fadeIn second"
+        name="username"
+        placeholder="username"
+        ngModel
+        #usernameInput="ngModel"
+        required
+      />
+      <input
+        type="email"
+        class="fadeIn third"
+        name="email"
+        placeholder="email"
+        ngModel
+        #emailInput="ngModel"
+        required
+      />
+      <!-- <input type="submit" class="fadeIn fourth" value="Log In" /> -->
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="registerForm.invalid"
+      >
+        <span>Register</span>
+      </button>
+      <div id="formFooter">
+        <a class="underlineHover" routerLink="/login"
+          >Already have an account? Sign in</a
+        >
+      </div>
+    </form>
+  </div>
+</div>
