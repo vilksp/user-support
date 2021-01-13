@@ -19,17 +19,14 @@ export class AuthenticationService {
   private jwtHelper = new JwtHelperService();
   constructor(private http: HttpClient) {}
 
-  public login(user: User): Observable<HttpResponse<User> | HttpErrorResponse> {
-    return this.http.post<User>(`{$this.host}/api/user/login`, user, {
+  public login(user: User): Observable<HttpResponse<User>> {
+    return this.http.post<User>(`${this.host}/api/user/login`, user, {
       observe: 'response',
     });
   }
 
-  public register(user: User): Observable<User | HttpErrorResponse> {
-    return this.http.post<User | HttpErrorResponse>(
-      `{$this.host}/api/user/register`,
-      user
-    );
+  public register(user: User): Observable<User> {
+    return this.http.post<User>(`${this.host}/api/user/register`, user);
   }
 
   public logout(): void {

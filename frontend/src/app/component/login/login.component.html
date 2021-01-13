@@ -5,41 +5,43 @@
     <!-- Tabs Titles -->
 
     <!-- Icon -->
-    <div class="fadeIn first">
-      <img
-        src="http://danielzawadzki.com/codepen/01/icon.svg"
-        id="icon"
-        alt="User Icon"
-      />
-    </div>
 
     <!-- Login Form -->
-    <form>
+    <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm.value)">
       <input
         type="text"
         id="login"
         class="fadeIn second"
         name="username"
         placeholder="username"
+        ngModel
+        #usernameInput="ngModel"
         required
       />
       <input
-        type="text"
+        type="password"
         id="password"
         class="fadeIn third"
-        name="login"
+        name="password"
         placeholder="password"
+        ngModel
+        #passwordInput="ngModel"
         required
       />
-
-      <input type="submit" class="fadeIn fourth" value="Log In" />
-      <button class="btn btn-primary" type="button" disabled>
+      <!-- <input type="submit" class="fadeIn fourth" value="Log In" /> -->
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="loginForm.invalid || showLoading"
+      >
         <span
+          *ngIf="showLoading"
           class="spinner-border spinner-border-sm"
           role="status"
           aria-hidden="true"
-        ></span>
-        Loading...
+          >Loading...</span
+        >
+        <span>Log in</span>
       </button>
     </form>
 

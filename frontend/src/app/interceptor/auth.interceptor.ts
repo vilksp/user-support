@@ -16,13 +16,15 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     httpHandler: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    if (request.url.includes(`${this.authService.host}/user/login`)) {
+    if (request.url.includes(`${this.authService.host}/api/user/login`)) {
       return httpHandler.handle(request);
     }
-    if (request.url.includes(`${this.authService.host}/user/register`)) {
+    if (request.url.includes(`${this.authService.host}/api/user/register`)) {
       return httpHandler.handle(request);
     }
-    if (request.url.includes(`${this.authService.host}/user/resetpassword`)) {
+    if (
+      request.url.includes(`${this.authService.host}/api/user/resetpassword`)
+    ) {
       return httpHandler.handle(request);
     }
     this.authService.loadToken();
