@@ -3,7 +3,7 @@
     <div class="col-md-4"></div>
     <div class="col-md-4">
       <h5>User management</h5>
-      <small></small>
+      <small *ngIf="titleAction$ | async as title">{{ title }}</small>
     </div>
   </div>
   <div class="col-md-4"></div>
@@ -12,7 +12,6 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <div class="nav nav-pills">
         <a
-          href="#users"
           class="nav-item nav-link active ml-1"
           data-toggle="tab"
           (click)="changeTitle('Users')"
@@ -21,7 +20,6 @@
           Users
         </a>
         <a
-          href="#reset-password"
           class="nav-item nav-link ml-3"
           data-toggle="tab"
           (click)="changeTitle('Settings')"
@@ -30,12 +28,11 @@
           Settings
         </a>
         <a
-          href="profile"
           class="nav-item nav-link move-right mr-3"
           data-toggle="tab"
           (click)="changeTitle('Profile')"
         >
-          Welcome
+          Welcome,
           <i class="fa fa-user"></i>
         </a>
       </div>
