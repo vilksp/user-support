@@ -10,5 +10,5 @@ public class FileConstant {
     public static final String FILE_SAVED_IN_SYSTEM = "Saved file in system with a name: ";
     public static final String DOT = ".";
     public static final String SLASH = "/";
-    public static final String TEMP_PROFILE_IMAGE_BASE_URL = "https://robohash.org";
+    public static final String TEMP_PROFILE_IMAGE_BASE_URL = "https://robohash.org/";
 }

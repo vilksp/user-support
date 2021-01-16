@@ -117,9 +117,7 @@ public class UserController {
     @GetMapping(path = "/image/profile/{username}", produces = IMAGE_JPEG_VALUE)
     public byte[] getTempProfileImage(@PathVariable String username) throws IOException {
         URL url = new URL(TEMP_PROFILE_IMAGE_BASE_URL + username);
-
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
         try (InputStream inputStream = url.openStream()) {
             int bytesRead;
             byte[] chunk = new byte[1024];
@@ -127,10 +125,7 @@ public class UserController {
                 byteArrayOutputStream.write(chunk, 0, bytesRead);
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
         return byteArrayOutputStream.toByteArray();
     }
 
