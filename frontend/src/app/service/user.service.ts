@@ -19,7 +19,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   public getUsers(): Observable<User[] | HttpErrorResponse> {
-    return this.http.get<User[]>(`{$this.host}/api/user/list`);
+    return this.http.get<User[]>(`${this.host}/api/user/find/list`);
   }
   public addUser(
     userRequest: UserRequest,
@@ -49,7 +49,7 @@ export class UserService {
   }
 
   public deleteUser(userId: number): Observable<any | HttpErrorResponse> {
-    return this.http.delete(`$this.host}/api/user/delete/${userId}`);
+    return this.http.delete(`${this.host}/api/user/delete/${userId}`);
   }
 
   public addUsersToLocalCache(users: User[]): void {
